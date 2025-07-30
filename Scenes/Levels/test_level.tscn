@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhllhyfrolixm"]
+
+[ext_resource type="Texture2D" uid="uid://cr3yg2untrh5n" path="res://icon.svg" id="1_7t06c"]
+[ext_resource type="PackedScene" uid="uid://om0grnd1rjed" path="res://Scenes/Actors/Bee/bee.tscn" id="2_b07c4"]
+[ext_resource type="PackedScene" uid="uid://b83l6e1sro06g" path="res://Scenes/Actors/wasp.tscn" id="3_2ytpj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_b07c4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7t06c"]
+size = Vector2(320, 16)
+
+[node name="test_level" type="Node2D"]
+
+[node name="test_floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 72)
+physics_material_override = SubResource("PhysicsMaterial_b07c4")
+
+[node name="Sprite2D" type="Sprite2D" parent="test_floor"]
+scale = Vector2(2.5, 0.125)
+texture = ExtResource("1_7t06c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="test_floor"]
+shape = SubResource("RectangleShape2D_7t06c")
+
+[node name="Bee" parent="." instance=ExtResource("2_b07c4")]
+position = Vector2(0, 32)
+health = 3
+
+[node name="Camera2D" type="Camera2D" parent="Bee"]
+zoom = Vector2(0.8, 0.8)
+position_smoothing_speed = 2.0
+
+[node name="Wasp" parent="." instance=ExtResource("3_2ytpj")]
