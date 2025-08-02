@@ -1,32 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7vim00trfcpx"]
+[gd_scene load_steps=8 format=3 uid="uid://c7vim00trfcpx"]
 
 [ext_resource type="Script" uid="uid://nefvxh2iru7r" path="res://Scenes/Globals/game_manager.gd" id="1_hargk"]
 [ext_resource type="Script" uid="uid://whmwo2etogdj" path="res://Scenes/Globals/game_timer.gd" id="2_hq2b8"]
 [ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="2_qit1t"]
+[ext_resource type="Texture2D" uid="uid://ceft18vdx873u" path="res://Sprites/VFX/circle.png" id="4_evjdp"]
+[ext_resource type="AudioStream" uid="uid://c2er5cngt1oui" path="res://Audio/sfx/timebombreverse.wav" id="4_y52mb"]
+[ext_resource type="Shader" uid="uid://bwrtwqa86wl8" path="res://Shaders/circle.gdshader" id="5_rlibi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vdvrv"]
+shader = ExtResource("5_rlibi")
+shader_parameter/portal_texture = ExtResource("4_evjdp")
+shader_parameter/portal_tint = Color(1, 1, 1, 1)
+shader_parameter/vortex_effect_radius = 0.56
+shader_parameter/twist_strength = 21.8
+shader_parameter/pulsation_speed = 0.7
+shader_parameter/breath_magnitude = 0.05
+shader_parameter/overall_rotation_speed = 0.25
+shader_parameter/texture_scroll_speed_x = 0.08
+shader_parameter/texture_scroll_speed_y = 0.16
+shader_parameter/edge_softness = 0.105
 
 [node name="GameManager" type="Node2D" node_paths=PackedStringArray("UI", "gametimer", "time_up")]
 script = ExtResource("1_hargk")
 UI = NodePath("CanvasLayer/UI")
 gametimer = NodePath("CanvasLayer/UI/GameTimer")
-time_up = NodePath("TimeUp")
-
-[node name="TimeUp" type="Control" parent="."]
-visible = false
-z_index = 1
-layout_mode = 3
-anchors_preset = 0
-offset_right = 640.0
-offset_bottom = 360.0
-
-[node name="bg" type="ColorRect" parent="TimeUp"]
-z_index = -2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
+time_up = NodePath("CanvasLayer/TimeUp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -39,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_qit1t")
 
-[node name="GameTimer" type="Control" parent="CanvasLayer/UI" node_paths=PackedStringArray("time_up")]
+[node name="GameTimer" type="Control" parent="CanvasLayer/UI" node_paths=PackedStringArray("time_up", "ui", "circle")]
 layout_mode = 3
 anchors_preset = 0
 offset_top = -50.0
@@ -47,7 +45,9 @@ offset_right = 40.0
 offset_bottom = -10.0
 script = ExtResource("2_hq2b8")
 max_time = 5.0
-time_up = NodePath("../../../TimeUp")
+time_up = NodePath("../../TimeUp")
+ui = NodePath("..")
+circle = NodePath("../../TimeUp/circle")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI/GameTimer"]
 layout_mode = 1
@@ -83,3 +83,46 @@ offset_top = 4.0
 offset_right = 118.0
 offset_bottom = 34.0
 text = "00"
+
+[node name="sounds" type="AudioStreamPlayer2D" parent="CanvasLayer/UI/GameTimer"]
+position = Vector2(0, 50)
+stream = ExtResource("4_y52mb")
+
+[node name="TimeUp" type="Control" parent="CanvasLayer"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+theme = ExtResource("2_qit1t")
+
+[node name="Label" type="Label" parent="CanvasLayer/TimeUp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 27.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "TIME'S UP!"
+horizontal_alignment = 1
+
+[node name="circle" type="TextureRect" parent="CanvasLayer/TimeUp"]
+material = SubResource("ShaderMaterial_vdvrv")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.01, 0.01)
+pivot_offset = Vector2(20, 20)
+texture = ExtResource("4_evjdp")

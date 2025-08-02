@@ -1,15 +1,30 @@
-[gd_scene load_steps=6 format=4 uid="uid://bhcqi2uns6ce7"]
+[gd_scene load_steps=8 format=4 uid="uid://bhcqi2uns6ce7"]
 
 [ext_resource type="PackedScene" uid="uid://om0grnd1rjed" path="res://Scenes/Actors/Bee/bee.tscn" id="1_r74qd"]
+[ext_resource type="Shader" uid="uid://b72p54rutv0w0" path="res://Shaders/hitflashoutline.gdshader" id="2_kj5ij"]
 [ext_resource type="TileSet" uid="uid://b7lmiyvf0ey2j" path="res://tileset1.tres" id="2_um5o3"]
 [ext_resource type="PackedScene" uid="uid://nu6c72eyik58" path="res://Scenes/Globals/level_exit.tscn" id="3_kj5ij"]
 [ext_resource type="PackedScene" uid="uid://b83l6e1sro06g" path="res://Scenes/Actors/wasp.tscn" id="4_1ih7c"]
 [ext_resource type="PackedScene" uid="uid://d1ea37pevuhnv" path="res://Scenes/Menus/pause.tscn" id="5_um5o3"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ih7c"]
+resource_local_to_scene = true
+shader = ExtResource("2_kj5ij")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(1, 1, 1, 0.5)
+shader_parameter/outline_size = 0.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/shade_color = Color(1, 1, 1, 0)
+
 [node name="level0" type="Node2D"]
 
 [node name="Bee" parent="." instance=ExtResource("1_r74qd")]
 position = Vector2(80, 416)
+
+[node name="AnimatedSprite2D" parent="Bee" index="1"]
+material = SubResource("ShaderMaterial_1ih7c")
 
 [node name="Camera2D" parent="Bee" index="8"]
 limit_top = 144

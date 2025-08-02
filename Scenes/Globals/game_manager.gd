@@ -15,13 +15,23 @@ func restart_game() -> void:
 	tornado_unlocked = false
 	upkick_unlocked = false
 	gametimer.restart()
+	timer_show()
+	UI.show()
+
+func timer_show() -> void:
 	var tween = create_tween()
 	tween.tween_property(gametimer, "position", Vector2(0, 0), 1).set_trans(Tween.TRANS_SINE)
-	UI.show()
+
+func timer_hide() -> void:
+	gametimer.position = Vector2(0, -50)
 
 func timebombed() -> void:
 	SceneTransition.change_scene_dissolve("res://Scenes/Levels/level_1.tscn")
+	await get_tree().create_timer(.8).timeout
 	gametimer.restart()
+	UI.show()
+	timer_hide()
+	timer_show()
 
 func end_game() -> void:
 	gametimer.stop()

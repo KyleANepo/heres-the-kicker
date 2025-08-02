@@ -109,7 +109,7 @@ func _set_state() -> void:
 				sprite.play("idle")
 				state = State.IDLE
 				tornado_count = false
-		elif Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("jump"):
+		elif Input.is_action_just_pressed("attack"):
 			_attack_air("attack")
 		elif Input.is_action_just_pressed("altattack"):
 			_attack_air("altattack")
@@ -206,6 +206,8 @@ func freeze() -> void:
 	sprite.stop()
 	velocity.x = 0
 	velocity.y = 0
+	audio.play_sound(false, 0)
+	audio.play_sound(false, 4)
 	flash.play("flash")
 	$TimeUp.show()
 	can_control = false

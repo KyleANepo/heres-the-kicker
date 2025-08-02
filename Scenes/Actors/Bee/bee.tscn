@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://om0grnd1rjed"]
+[gd_scene load_steps=70 format=3 uid="uid://om0grnd1rjed"]
 
 [ext_resource type="Script" uid="uid://dhpcd0pp3ofp2" path="res://Scenes/Actors/Bee/bee.gd" id="1_qa8nb"]
 [ext_resource type="Resource" uid="uid://cibv65g2to740" path="res://Scenes/Actors/Bee/attackdata/divekick.tres" id="2_kihkt"]
@@ -15,6 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://dua11srl6i284" path="res://Scenes/Components/sound_player.tscn" id="11_u0c58"]
 [ext_resource type="AudioStream" uid="uid://bp60jj4efp4tk" path="res://Audio/sfx/divekick.wav" id="12_4ar8m"]
 [ext_resource type="Script" uid="uid://b8kox6rskufow" path="res://Scenes/Components/camera_2d.gd" id="13_bcrer"]
+[ext_resource type="AudioStream" uid="uid://dglwc4qdfwdxg" path="res://Audio/sfx/boom.wav" id="14_qsw7d"]
+[ext_resource type="AudioStream" uid="uid://3netln7khkgk" path="res://Audio/sfx/jump.wav" id="15_adm66"]
+[ext_resource type="AudioStream" uid="uid://b0ayjpatlxw0g" path="res://Audio/sfx/whiff.wav" id="16_cgm2c"]
+[ext_resource type="AudioStream" uid="uid://7t0vs2t2xr1q" path="res://Audio/sfx/ko.wav" id="17_6j7km"]
+[ext_resource type="AudioStream" uid="uid://brsupqwsnmf4c" path="res://Audio/sfx/timebomb.wav" id="18_7eqx7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b07c4"]
 size = Vector2(16, 32)
@@ -838,23 +843,6 @@ tracks/0/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_su4fi"]
-resource_name = "hitflash"
-length = 0.2
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
 [sub_resource type="Animation" id="Animation_67v2q"]
 resource_name = "flash"
 length = 0.2
@@ -872,6 +860,23 @@ tracks/0/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_su4fi"]
+resource_name = "hitflash"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_108fw"]
 _data = {
 &"RESET": SubResource("Animation_108fw"),
@@ -881,6 +886,21 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ar8m"]
 size = Vector2(16, 24)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8om21"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("14_qsw7d")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_utpv3"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("16_cgm2c")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8geml"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("17_6j7km")
 
 [node name="Bee" type="CharacterBody2D" groups=["player"]]
 z_index = 5
@@ -898,7 +918,7 @@ shape = SubResource("RectangleShape2D_b07c4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_108fw")
 sprite_frames = SubResource("SpriteFrames_7t06c")
-animation = &"idle"
+animation = &"jump"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -931,6 +951,7 @@ shape = SubResource("RectangleShape2D_4ar8m")
 [node name="hitspark_player" parent="." instance=ExtResource("10_i801t")]
 
 [node name="sound_player" parent="." instance=ExtResource("11_u0c58")]
+defaultSFX = Array[AudioStream]([SubResource("AudioStreamRandomizer_8om21"), ExtResource("15_adm66"), SubResource("AudioStreamRandomizer_utpv3"), SubResource("AudioStreamRandomizer_8geml"), ExtResource("18_7eqx7")])
 characterSFX = Array[AudioStream]([ExtResource("12_4ar8m")])
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -940,6 +961,7 @@ position_smoothing_speed = 2.0
 script = ExtResource("13_bcrer")
 
 [node name="TimeUp" type="Control" parent="."]
+visible = false
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
