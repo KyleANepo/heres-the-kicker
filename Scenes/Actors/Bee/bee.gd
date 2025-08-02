@@ -13,7 +13,6 @@ var look : int = 1
 var can_control : bool = true
 var jump_count : int = 0
 var tornado_count : bool = false
-var ko : bool = false
 
 enum State {
 	IDLE,
@@ -211,7 +210,32 @@ func freeze() -> void:
 	flash.play("flash")
 	$TimeUp.show()
 	can_control = false
-	
+
+func freeze_with_benefits() -> void:
+	state = State.FREEZE
+	sprite.stop()
+	velocity.x = 0
+	velocity.y = 0
+	audio.play_sound(false, 0)
+	audio.play_sound(false, 4)
+	flash.play("flash")
+	$TimeUp.show()
+	can_control = false
+	await get_tree().create_timer(4).timeout
+	state = State.IDLE
+	sprite.play("idle")
+	flash.play("hitflash")
+	$TimeUp.hide()
+	can_control = true
+	GameManager.gametimer.time += 3
+	GameManager.gametimer.resume()
+
+func unfreeze() -> void:
+	state = State.IDLE
+	sprite.play("idle")
+	flash.play("hitflash")
+	$TimeUp.hide()
+	can_control = true
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "tornadokick":

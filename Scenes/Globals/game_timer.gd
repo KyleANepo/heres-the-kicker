@@ -10,6 +10,7 @@ var minutes: int = 0
 var seconds: int = 0
 var msec: int = 0
 var start : bool = false
+var over : bool = false
 
 func _process(delta) -> void:
 	if start:
@@ -21,7 +22,8 @@ func _process(delta) -> void:
 	$Second.text = "%02d." % seconds
 	$MS.text = "%02d" % msec
 	
-	if time <= 0:
+	if time <= 0 and not over:
+		over = true
 		time = 0
 		$Minute.text = "00:"
 		$Second.text = "00."
@@ -31,6 +33,7 @@ func _process(delta) -> void:
 
 func restart() -> void:
 	await get_tree().create_timer(.42).timeout
+	over = false
 	circle.scale = Vector2(.01, .01)
 	time_up.hide()
 	time = max_time
@@ -41,7 +44,7 @@ func restart() -> void:
 
 func timebomb() -> void:
 	var player : Bee = get_tree().get_nodes_in_group("player")[0] as Bee
-	player.freeze()
+	player.call_deferred("freeze")
 	ui.hide()
 	time_up.show()
 	await get_tree().create_timer(1).timeout
@@ -49,6 +52,10 @@ func timebomb() -> void:
 	var tween = create_tween()
 	tween.tween_property(circle, "scale", Vector2(20, 20), 2).set_trans(Tween.TRANS_EXPO)
 	tween.tween_callback($"../../..".timebombed)
+
+func resume() -> void:
+	start = true
+	set_process(true)
 
 func stop() -> void:
 	start = false

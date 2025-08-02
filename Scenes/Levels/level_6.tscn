@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://bfytquay7ulmw"]
+[gd_scene load_steps=9 format=4 uid="uid://bfytquay7ulmw"]
 
 [ext_resource type="PackedScene" uid="uid://om0grnd1rjed" path="res://Scenes/Actors/Bee/bee.tscn" id="1_vrotf"]
 [ext_resource type="TileSet" uid="uid://b7lmiyvf0ey2j" path="res://tileset1.tres" id="2_ik81l"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://b83l6e1sro06g" path="res://Scenes/Actors/wasp.tscn" id="4_eygg8"]
 [ext_resource type="PackedScene" uid="uid://dx6i3x1h1c2gp" path="res://Scenes/Components/tornado_upgrade.tscn" id="5_ik81l"]
 [ext_resource type="PackedScene" uid="uid://d1ea37pevuhnv" path="res://Scenes/Menus/pause.tscn" id="6_h7uay"]
+[ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="7_eygg8"]
+[ext_resource type="Script" uid="uid://cd6m87q14j5m1" path="res://Scenes/Components/cyclone_label.gd" id="8_5l77v"]
 
 [node name="level6" type="Node2D"]
 
@@ -47,3 +49,16 @@ position = Vector2(448, 424)
 
 [node name="Pause" parent="CanvasLayer" instance=ExtResource("6_h7uay")]
 visible = false
+
+[node name="cyclone_label" type="Label" parent="."]
+offset_left = 243.0
+offset_top = 320.0
+offset_right = 399.0
+offset_bottom = 383.0
+theme = ExtResource("7_eygg8")
+text = "RIGHT CLICK
+FOR CYCLONE!"
+horizontal_alignment = 1
+script = ExtResource("8_5l77v")
+
+[connection signal="gotten" from="TornadoUpgrade" to="cyclone_label" method="_on_tornado_upgrade_gotten"]

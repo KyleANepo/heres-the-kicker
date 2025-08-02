@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://bhcqi2uns6ce7"]
+[gd_scene load_steps=9 format=4 uid="uid://bhcqi2uns6ce7"]
 
 [ext_resource type="PackedScene" uid="uid://om0grnd1rjed" path="res://Scenes/Actors/Bee/bee.tscn" id="1_r74qd"]
 [ext_resource type="Shader" uid="uid://b72p54rutv0w0" path="res://Shaders/hitflashoutline.gdshader" id="2_kj5ij"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://nu6c72eyik58" path="res://Scenes/Globals/level_exit.tscn" id="3_kj5ij"]
 [ext_resource type="PackedScene" uid="uid://b83l6e1sro06g" path="res://Scenes/Actors/wasp.tscn" id="4_1ih7c"]
 [ext_resource type="PackedScene" uid="uid://d1ea37pevuhnv" path="res://Scenes/Menus/pause.tscn" id="5_um5o3"]
+[ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="7_1ih7c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ih7c"]
 resource_local_to_scene = true
@@ -50,6 +51,41 @@ position = Vector2(816, 416)
 
 [node name="Pause" parent="CanvasLayer" instance=ExtResource("5_um5o3")]
 visible = false
+
+[node name="tutorial" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 32.0
+offset_top = 160.0
+offset_right = 72.0
+offset_bottom = 200.0
+theme = ExtResource("7_1ih7c")
+
+[node name="move" type="Label" parent="tutorial"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 80.0
+offset_right = 206.0
+offset_bottom = 110.0
+text = "WASD TO MOVE!"
+
+[node name="jump" type="Label" parent="tutorial"]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 80.0
+offset_right = 462.0
+offset_bottom = 110.0
+text = "SPACE TO JUMP!"
+
+[node name="jump2" type="Label" parent="tutorial"]
+layout_mode = 0
+offset_left = 565.0
+offset_top = 80.0
+offset_right = 809.0
+offset_bottom = 143.0
+text = "LEFT CLICK WHEN
+JUMPING TO DIVEKICK!"
+horizontal_alignment = 1
 
 [editable path="Bee"]
 [editable path="Bee/Hurtbox"]

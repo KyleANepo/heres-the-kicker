@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b83l6e1sro06g"]
+[gd_scene load_steps=19 format=3 uid="uid://b83l6e1sro06g"]
 
 [ext_resource type="Script" uid="uid://c1dwvnis3yy0r" path="res://Scenes/Actors/wasp.gd" id="1_jor0a"]
 [ext_resource type="Shader" uid="uid://b72p54rutv0w0" path="res://Shaders/hitflashoutline.gdshader" id="2_j4qit"]
@@ -97,6 +97,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/tint")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_j4qit"]
 resource_name = "hitflash"
@@ -114,11 +126,53 @@ tracks/0/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/tint")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vjcv6"]
+resource_name = "respawn"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/tint")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g0jxc"]
 _data = {
 &"RESET": SubResource("Animation_g0jxc"),
-&"hitflash": SubResource("Animation_j4qit")
+&"hitflash": SubResource("Animation_j4qit"),
+&"respawn": SubResource("Animation_vjcv6")
 }
 
 [node name="Wasp" type="CharacterBody2D"]

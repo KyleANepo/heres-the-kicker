@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=4 uid="uid://h0c6mkgcsqkv"]
+[gd_scene load_steps=8 format=4 uid="uid://h0c6mkgcsqkv"]
 
 [ext_resource type="PackedScene" uid="uid://om0grnd1rjed" path="res://Scenes/Actors/Bee/bee.tscn" id="1_tlcug"]
 [ext_resource type="TileSet" uid="uid://b7lmiyvf0ey2j" path="res://tileset1.tres" id="2_4dpyx"]
 [ext_resource type="PackedScene" uid="uid://b83l6e1sro06g" path="res://Scenes/Actors/wasp.tscn" id="3_3mqfk"]
 [ext_resource type="PackedScene" uid="uid://nu6c72eyik58" path="res://Scenes/Globals/level_exit.tscn" id="4_iixi8"]
 [ext_resource type="PackedScene" uid="uid://d1ea37pevuhnv" path="res://Scenes/Menus/pause.tscn" id="5_cyadu"]
+[ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="6_5f3p6"]
+[ext_resource type="Script" uid="uid://celw0jokdi1xy" path="res://Scenes/Components/knowledge_label.gd" id="7_jv26f"]
 
 [node name="level1" type="Node2D"]
 
@@ -26,3 +28,15 @@ next_level = "uid://v11ypghjxal3"
 
 [node name="Pause" parent="CanvasLayer" instance=ExtResource("5_cyadu")]
 visible = false
+
+[node name="knowledge" type="Label" parent="."]
+offset_left = 224.0
+offset_top = 344.0
+offset_right = 420.0
+offset_bottom = 407.0
+theme = ExtResource("6_5f3p6")
+text = "YOUR MEMORY
+PERSISTS!"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_jv26f")
