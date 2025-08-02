@@ -3,6 +3,8 @@ class_name Entity
 
 @onready var flash : AnimationPlayer = $Flash
 @onready var sprite : AnimationPlayer = $AnimationPlayer
+@onready var spark : HitsparkPlayer = $hitspark_player
+@onready var audio : SoundPlayer = $sound_player
 @export var health = 1
 @export var curAttack : Attack
 
@@ -11,8 +13,9 @@ func take_damage(values : Attack) -> void:
 	if values.attackOwner is Bee:
 		values.attackOwner.attack_successful()
 	
+	
 	if health <= 0:
-		destroy()
+		call_deferred("destroy")
 
 func destroy() -> void:
-	queue_free()
+	pass

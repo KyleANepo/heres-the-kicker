@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://d5dbrwgr6h2e"]
+
+[ext_resource type="Script" uid="uid://ep0j8bbtxlbo" path="res://Scenes/Menus/debug_load.gd" id="1_f1wo0"]
+
+[node name="load" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f1wo0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 99
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

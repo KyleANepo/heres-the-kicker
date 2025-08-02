@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7vim00trfcpx"]
+
+[ext_resource type="Script" uid="uid://nefvxh2iru7r" path="res://Scenes/Globals/game_manager.gd" id="1_hargk"]
+[ext_resource type="Script" uid="uid://whmwo2etogdj" path="res://Scenes/Globals/game_timer.gd" id="2_hq2b8"]
+[ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="2_qit1t"]
+
+[node name="GameManager" type="Node2D" node_paths=PackedStringArray("UI", "gametimer")]
+script = ExtResource("1_hargk")
+UI = NodePath("CanvasLayer/UI")
+gametimer = NodePath("CanvasLayer/UI/GameTimer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_qit1t")
+
+[node name="GameTimer" type="Control" parent="CanvasLayer/UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_right = 48.0
+offset_bottom = 40.0
+script = ExtResource("2_hq2b8")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UI/GameTimer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_right = 612.0
+offset_bottom = 33.0
+grow_horizontal = 2
+color = Color(0.756863, 0.466667, 0, 1)
+
+[node name="Minute" type="Label" parent="CanvasLayer/UI/GameTimer"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 44.0
+offset_bottom = 34.0
+text = "00:"
+
+[node name="Second" type="Label" parent="CanvasLayer/UI/GameTimer"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 4.0
+offset_right = 81.0
+offset_bottom = 34.0
+text = "00."
+
+[node name="MS" type="Label" parent="CanvasLayer/UI/GameTimer"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 4.0
+offset_right = 110.0
+offset_bottom = 34.0
+text = "00"

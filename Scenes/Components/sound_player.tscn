@@ -1,0 +1,26 @@
+[gd_scene load_steps=9 format=3 uid="uid://dua11srl6i284"]
+
+[ext_resource type="Script" uid="uid://cfgokfkmdvh0a" path="res://Scenes/Components/sound_player.gd" id="1_5r8aw"]
+[ext_resource type="AudioStream" uid="uid://dglwc4qdfwdxg" path="res://Audio/sfx/boom.wav" id="2_8om21"]
+[ext_resource type="AudioStream" uid="uid://3netln7khkgk" path="res://Audio/sfx/jump.wav" id="3_bkeln"]
+[ext_resource type="AudioStream" uid="uid://b0ayjpatlxw0g" path="res://Audio/sfx/whiff.wav" id="4_utpv3"]
+[ext_resource type="AudioStream" uid="uid://7t0vs2t2xr1q" path="res://Audio/sfx/ko.wav" id="5_kjeq4"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8om21"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("2_8om21")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_utpv3"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("4_utpv3")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8geml"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("5_kjeq4")
+
+[node name="sound_player" type="Node2D"]
+script = ExtResource("1_5r8aw")
+defaultSFX = Array[AudioStream]([SubResource("AudioStreamRandomizer_8om21"), ExtResource("3_bkeln"), SubResource("AudioStreamRandomizer_utpv3"), SubResource("AudioStreamRandomizer_8geml")])

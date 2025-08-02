@@ -4,9 +4,16 @@ class_name Bee
 @export var speed : float = 300.0
 @export var jump_force : float = -300
 @export var divekick_speed : float = 250
+@export var tornadokick_speed : float = 300
+@export var jumpbuffer_time : float = .2
+@export var coyotetime : float = .1
+var jumpbuffer_timer : float
+var coyotetimer : float
 var look : int = 1
 var can_control : bool = true
 var jump_count : int = 0
+var tornado_count : bool = false
+var ko : bool = false
 
 enum State {
 	IDLE,
@@ -23,17 +30,34 @@ var state : State = State.IDLE
 func _ready() -> void:
 	sprite.play("idle")
 
+func _process(delta: float) -> void:
+	jumpbuffer_timer -= delta
+	coyotetimer -= delta
+	
+	if Input.is_action_just_pressed("debug"):
+		SceneTransition.change_scene_wipe(get_tree().current_scene.scene_file_path)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor() and state not in [State.ATTACK, State.ATTACKAIR, State.HITSTOP]:
-		velocity += get_gravity() * delta
+		velocity.y = min(velocity.y + (get_gravity().y * delta), 400)
 	
 	_look()
 	_set_state()
 
 	move_and_slide()
 
+func destroy() -> void:
+	if not ko:
+		state = State.JUGGLE
+		sprite.play("juggle")
+		flash.play("hitflash")
+		spark.play_spark("hit")
+		audio.play_sound(false, 0)
+		audio.play_sound(false, 3)
+		velocity.x = 0
+		velocity.y = -400
+		ko = true
 
 func _set_state() -> void:
 	if state == State.IDLE:
@@ -44,12 +68,22 @@ func _set_state() -> void:
 		else:
 			sprite.play("idle")
 		
+		
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			sprite.play("jump")
-			_jump()
+			_jump(0)
+		elif Input.is_action_just_pressed("altattack") and GameManager.tornado_unlocked:
+			position.y -= 4
+			spark.play_spark("jump")
+			audio.play_sound(false, 1)
+			call_deferred_thread_group("_attack_air", "altattack")
 		elif not is_on_floor():
+			coyotetimer = coyotetime
 			sprite.play("flip")
 			state = State.JUMP
+		
+		if Input.is_action_just_pressed("down") and is_on_floor():
+			position.y += 1
 	
 	if state == State.JUMP:
 		_move()
@@ -57,21 +91,43 @@ func _set_state() -> void:
 		if velocity.y >= -150:
 			sprite.play("flip")
 		
+		if Input.is_action_just_pressed("jump"):
+			if coyotetimer > 0:
+				sprite.play("jump")
+				_jump(0)
+			else:
+				jumpbuffer_timer = jumpbuffer_time
+		
 		if is_on_floor() and velocity.y >= 0:
 			jump_count = 0
-			sprite.play("idle")
-			state = State.IDLE
-		elif Input.is_action_just_pressed("attack"):
-			_attack_air()
+			if jumpbuffer_timer > 0:
+				sprite.play("jump")
+				_jump(0)
+			else:
+				sprite.play("idle")
+				state = State.IDLE
+				tornado_count = false
+		elif Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("jump"):
+			_attack_air("attack")
+		elif Input.is_action_just_pressed("altattack"):
+			_attack_air("altattack")
 	
 	if state == State.ATTACK:
 		pass
 	
 	if state == State.ATTACKAIR:
+		if Input.is_action_just_pressed("jump"):
+			jumpbuffer_timer = jumpbuffer_time
+		
 		if is_on_floor() and velocity.y >= 0:
 			jump_count = 0
-			sprite.play("idle")
-			state = State.IDLE
+			tornado_count = false
+			if jumpbuffer_timer > 0:
+				sprite.play("jump")
+				_jump(0)
+			else:
+				sprite.play("idle")
+				state = State.IDLE
 	
 	if state == State.HITSTOP:
 		pass
@@ -80,7 +136,7 @@ func _set_state() -> void:
 		pass
 	
 	if state == State.JUGGLE:
-		if is_on_floor() and velocity.y >= 0:
+		if is_on_floor() and velocity.y >= 0 and not ko:
 			sprite.play("idle")
 			state = State.IDLE
 
@@ -102,19 +158,50 @@ func _look() -> void:
 		look = 1
 
 # Handle jump.
-func _jump() -> void:
+func _jump(boost : float) -> void:
+	if is_on_floor():
+		spark.play_spark("jump")
 	state = State.JUMP
-	velocity.y = jump_force
+	audio.play_sound(false, 1)
+	velocity.y = jump_force - boost
+	jump_count += 1
 
 func attack_successful() -> void:
-	sprite.play("flip")
-	_jump()
+	if not ko:
+		sprite.play("flip")
+		tornado_count = false
+		_jump(100)
+	
 
-func _attack_air() -> void:
+func _attack_air(action : String) -> void:
 	state = State.ATTACKAIR
-	_sting()
+	match (action):
+		"attack":
+			_sting()
+		"altattack":
+			if not tornado_count and GameManager.tornado_unlocked:
+				_tornado()
+			else:
+				_sting()
+	
 
 func _sting() -> void:
 	sprite.play("divekick")
+	audio.play_sound(true, 0)
 	velocity.x = look * divekick_speed
 	velocity.y = divekick_speed
+
+func _tornado() -> void:
+	sprite.play("tornadokick")
+	audio.play_sound(true, 0)
+	tornado_count = true
+	velocity.x = look * tornadokick_speed
+	velocity.y = 0
+
+func _restart_level() -> void:
+	SceneTransition.change_scene_wipe(get_tree().current_scene.scene_file_path)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "tornadokick":
+		sprite.play("flip")
+		state = State.JUMP

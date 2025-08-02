@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://b717q7v52oguy"]
+
+[ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="1_38aua"]
+[ext_resource type="Script" uid="uid://rmeety5tw4ws" path="res://Scenes/Menus/main_menu.gd" id="2_pha2q"]
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("tutorial_button", "start_button", "options_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_38aua")
+script = ExtResource("2_pha2q")
+tutorial_button = NodePath("Tutorial")
+start_button = NodePath("Start")
+options_button = NodePath("Options")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 352.0
+offset_top = 18.0
+offset_right = 531.0
+offset_bottom = 62.0
+scale = Vector2(1.5, 1.5)
+text = "Here's the"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 60.0
+offset_right = 518.0
+offset_bottom = 120.0
+scale = Vector2(1.5, 1.5)
+theme_override_font_sizes/font_size = 64
+text = "KICKER"
+horizontal_alignment = 2
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 256.0
+offset_right = 136.0
+offset_bottom = 290.0
+focus_neighbor_bottom = NodePath("../Options")
+text = "START"
+alignment = 0
+
+[node name="Tutorial" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 216.0
+offset_right = 136.0
+offset_bottom = 254.0
+text = "TUTORIAL"
+alignment = 0
+
+[node name="Options" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 296.0
+offset_right = 164.0
+offset_bottom = 330.0
+focus_neighbor_top = NodePath("../Start")
+text = "OPTIONS"
+alignment = 0
+
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Tutorial" to="." method="_on_tutorial_pressed"]

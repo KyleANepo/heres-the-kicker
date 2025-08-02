@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://b83l6e1sro06g"]
+[gd_scene load_steps=18 format=3 uid="uid://b83l6e1sro06g"]
 
 [ext_resource type="Script" uid="uid://c1dwvnis3yy0r" path="res://Scenes/Actors/wasp.gd" id="1_jor0a"]
-[ext_resource type="Texture2D" uid="uid://cr3yg2untrh5n" path="res://icon.svg" id="2_b1hdi"]
-[ext_resource type="Shader" path="res://Shaders/hitflashoutline.gdshader" id="2_j4qit"]
+[ext_resource type="Shader" uid="uid://b72p54rutv0w0" path="res://Shaders/hitflashoutline.gdshader" id="2_j4qit"]
 [ext_resource type="PackedScene" uid="uid://bxe7uc3yl8p7o" path="res://Scenes/Components/hurtbox.tscn" id="3_b1hdi"]
+[ext_resource type="Texture2D" uid="uid://o8sogrknjcua" path="res://Sprites/enemies/drone.png" id="3_vjcv6"]
+[ext_resource type="PackedScene" uid="uid://d06bdmjmfwxxq" path="res://Scenes/Components/hitspark_player.tscn" id="5_g0jxc"]
+[ext_resource type="PackedScene" uid="uid://dua11srl6i284" path="res://Scenes/Components/sound_player.tscn" id="6_vjcv6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b07c4"]
 size = Vector2(32, 32)
@@ -18,19 +20,37 @@ shader_parameter/alpha_threshold = 0.0
 shader_parameter/outline_samples = 4
 shader_parameter/shade_color = Color(1, 1, 1, 0)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag8wo"]
+atlas = ExtResource("3_vjcv6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_byc71"]
+atlas = ExtResource("3_vjcv6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0tcf"]
+atlas = ExtResource("3_vjcv6")
+region = Rect2(64, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_2ytpj"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_b1hdi")
+"texture": SubResource("AtlasTexture_ag8wo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_byc71")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0tcf")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [sub_resource type="Animation" id="Animation_jor0a"]
-length = 0.2
+length = 0.25
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -39,10 +59,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.0833333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1, 2]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -62,6 +82,21 @@ _data = {
 &"default": SubResource("Animation_jor0a")
 }
 
+[sub_resource type="Animation" id="Animation_g0jxc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_j4qit"]
 resource_name = "hitflash"
 length = 0.2
@@ -77,21 +112,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_g0jxc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g0jxc"]
@@ -110,8 +130,11 @@ shape = SubResource("RectangleShape2D_b07c4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_g0jxc")
-scale = Vector2(0.25, 0.25)
+position = Vector2(-9.53674e-07, 9.53674e-07)
+scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_2ytpj")
+autoplay = "default"
+frame_progress = 0.531259
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -124,3 +147,7 @@ libraries = {
 }
 
 [node name="Hurtbox" parent="." instance=ExtResource("3_b1hdi")]
+
+[node name="hitspark_player" parent="." instance=ExtResource("5_g0jxc")]
+
+[node name="sound_player" parent="." instance=ExtResource("6_vjcv6")]
