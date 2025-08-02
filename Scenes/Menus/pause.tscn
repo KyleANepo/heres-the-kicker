@@ -1,0 +1,104 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1ea37pevuhnv"]
+
+[ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="1_d36sb"]
+[ext_resource type="Script" uid="uid://bhn8pa1jl8jvx" path="res://Scenes/Menus/pause.gd" id="1_jc605"]
+[ext_resource type="Script" uid="uid://dobxpvjd161lk" path="res://Scenes/Menus/audio.gd" id="3_lrvf4"]
+
+[node name="Pause" type="Control"]
+process_mode = 3
+z_index = 20
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_d36sb")
+script = ExtResource("1_jc605")
+
+[node name="bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.290196)
+
+[node name="Resume" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 31.0
+offset_right = 160.0
+offset_bottom = 69.0
+text = "BACK"
+alignment = 0
+
+[node name="Options" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 69.0
+offset_right = 160.0
+offset_bottom = 107.0
+text = "OPTIONS"
+alignment = 0
+
+[node name="OptionsMenu" type="Control" parent="Options"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 21.0
+offset_top = 204.0
+offset_right = 61.0
+offset_bottom = 244.0
+
+[node name="ColorRect" type="ColorRect" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 243.0
+offset_top = -139.0
+offset_right = 541.0
+offset_bottom = 46.0
+color = Color(0.66, 0.4367, 0.198, 1)
+
+[node name="Back" type="Button" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -129.0
+offset_right = 319.0
+offset_bottom = -91.0
+text = "BACK"
+
+[node name="Audio" type="HSlider" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -24.0
+offset_right = 532.0
+offset_bottom = -8.0
+max_value = 1.0
+step = 0.1
+value = 1.0
+script = ExtResource("3_lrvf4")
+
+[node name="Label" type="Label" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -60.0
+offset_right = 343.0
+offset_bottom = -30.0
+text = "VOLUME"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 107.0
+offset_right = 160.0
+offset_bottom = 145.0
+text = "QUIT
+"
+alignment = 0
+
+[connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Options/OptionsMenu/Back" to="." method="_on_back_pressed"]
+[connection signal="value_changed" from="Options/OptionsMenu/Audio" to="Options/OptionsMenu/Audio" method="_on_value_changed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

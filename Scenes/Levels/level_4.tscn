@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://dxnv2ukq4rxkr"]
+[gd_scene load_steps=6 format=4 uid="uid://dxnv2ukq4rxkr"]
 
 [ext_resource type="PackedScene" uid="uid://om0grnd1rjed" path="res://Scenes/Actors/Bee/bee.tscn" id="1_6grq2"]
 [ext_resource type="TileSet" uid="uid://b7lmiyvf0ey2j" path="res://tileset1.tres" id="2_vwhew"]
 [ext_resource type="PackedScene" uid="uid://nu6c72eyik58" path="res://Scenes/Globals/level_exit.tscn" id="3_jqrsn"]
 [ext_resource type="PackedScene" uid="uid://b83l6e1sro06g" path="res://Scenes/Actors/wasp.tscn" id="4_vwhew"]
+[ext_resource type="PackedScene" uid="uid://d1ea37pevuhnv" path="res://Scenes/Menus/pause.tscn" id="5_jqrsn"]
 
 [node name="level4" type="Node2D"]
 
@@ -46,3 +47,8 @@ position = Vector2(128, 264)
 
 [node name="Wasp8" parent="Enemies" instance=ExtResource("4_vwhew")]
 position = Vector2(80, 80)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause" parent="CanvasLayer" instance=ExtResource("5_jqrsn")]
+visible = false

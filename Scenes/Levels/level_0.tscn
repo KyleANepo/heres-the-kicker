@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://bhcqi2uns6ce7"]
+[gd_scene load_steps=6 format=4 uid="uid://bhcqi2uns6ce7"]
 
 [ext_resource type="PackedScene" uid="uid://om0grnd1rjed" path="res://Scenes/Actors/Bee/bee.tscn" id="1_r74qd"]
 [ext_resource type="TileSet" uid="uid://b7lmiyvf0ey2j" path="res://tileset1.tres" id="2_um5o3"]
 [ext_resource type="PackedScene" uid="uid://nu6c72eyik58" path="res://Scenes/Globals/level_exit.tscn" id="3_kj5ij"]
 [ext_resource type="PackedScene" uid="uid://b83l6e1sro06g" path="res://Scenes/Actors/wasp.tscn" id="4_1ih7c"]
+[ext_resource type="PackedScene" uid="uid://d1ea37pevuhnv" path="res://Scenes/Menus/pause.tscn" id="5_um5o3"]
 
 [node name="level0" type="Node2D"]
 
@@ -29,6 +30,11 @@ next_level = "uid://b717q7v52oguy"
 
 [node name="Wasp" parent="Enemies" instance=ExtResource("4_1ih7c")]
 position = Vector2(816, 416)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause" parent="CanvasLayer" instance=ExtResource("5_um5o3")]
+visible = false
 
 [editable path="Bee"]
 [editable path="Bee/Hurtbox"]

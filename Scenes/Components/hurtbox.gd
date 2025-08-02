@@ -8,6 +8,5 @@ func _on_area_entered(hitbox: Area2D) -> void:
 			owner.take_damage(hitbox.get_damage(owner))
 
 # spikes
-func _on_body_entered(body: Node2D) -> void:
-	print("hm...")
+func _on_body_entered(_body: Node2D) -> void:
 	owner.take_damage(spike_damage)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://om0grnd1rjed"]
+[gd_scene load_steps=62 format=3 uid="uid://om0grnd1rjed"]
 
 [ext_resource type="Script" uid="uid://dhpcd0pp3ofp2" path="res://Scenes/Actors/Bee/bee.gd" id="1_qa8nb"]
 [ext_resource type="Resource" uid="uid://cibv65g2to740" path="res://Scenes/Actors/Bee/attackdata/divekick.tres" id="2_kihkt"]
@@ -20,6 +20,7 @@
 size = Vector2(16, 32)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_108fw"]
+resource_local_to_scene = true
 shader = ExtResource("3_su4fi")
 shader_parameter/enabled = false
 shader_parameter/tint = Color(1, 1, 1, 1)
@@ -854,17 +855,35 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_67v2q"]
+resource_name = "flash"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_108fw"]
 _data = {
 &"RESET": SubResource("Animation_108fw"),
+&"flash": SubResource("Animation_67v2q"),
 &"hitflash": SubResource("Animation_su4fi")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ar8m"]
 size = Vector2(16, 24)
 
-[node name="Bee" type="CharacterBody2D"]
-z_index = 1
+[node name="Bee" type="CharacterBody2D" groups=["player"]]
+z_index = 5
 collision_layer = 0
 script = ExtResource("1_qa8nb")
 speed = 140.0
@@ -919,6 +938,27 @@ limit_left = 0
 limit_right = 640
 position_smoothing_speed = 2.0
 script = ExtResource("13_bcrer")
+
+[node name="TimeUp" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="bg" type="ColorRect" parent="TimeUp"]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -633.0
+offset_top = -344.0
+offset_right = -633.0
+offset_bottom = -344.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 

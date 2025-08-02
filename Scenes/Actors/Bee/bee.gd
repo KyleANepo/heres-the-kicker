@@ -22,13 +22,15 @@ enum State {
 	ATTACKAIR,
 	HITSTOP,
 	STUN,
-	JUGGLE
+	JUGGLE,
+	FREEZE
 }
 
 var state : State = State.IDLE
 
 func _ready() -> void:
 	sprite.play("idle")
+	$TimeUp.hide()
 
 func _process(delta: float) -> void:
 	jumpbuffer_timer -= delta
@@ -39,7 +41,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if not is_on_floor() and state not in [State.ATTACK, State.ATTACKAIR, State.HITSTOP]:
+	if not is_on_floor() and state not in [State.ATTACK, State.ATTACKAIR, State.HITSTOP, State.FREEZE]:
 		velocity.y = min(velocity.y + (get_gravity().y * delta), 400)
 	
 	_look()
@@ -116,8 +118,6 @@ func _set_state() -> void:
 		pass
 	
 	if state == State.ATTACKAIR:
-		if Input.is_action_just_pressed("jump"):
-			jumpbuffer_timer = jumpbuffer_time
 		
 		if is_on_floor() and velocity.y >= 0:
 			jump_count = 0
@@ -200,6 +200,16 @@ func _tornado() -> void:
 
 func _restart_level() -> void:
 	SceneTransition.change_scene_wipe(get_tree().current_scene.scene_file_path)
+
+func freeze() -> void:
+	state = State.FREEZE
+	sprite.stop()
+	velocity.x = 0
+	velocity.y = 0
+	flash.play("flash")
+	$TimeUp.show()
+	can_control = false
+	
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "tornadokick":

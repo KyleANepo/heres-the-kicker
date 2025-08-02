@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b717q7v52oguy"]
+[gd_scene load_steps=4 format=3 uid="uid://b717q7v52oguy"]
 
 [ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="1_38aua"]
 [ext_resource type="Script" uid="uid://rmeety5tw4ws" path="res://Scenes/Menus/main_menu.gd" id="2_pha2q"]
+[ext_resource type="Script" uid="uid://dobxpvjd161lk" path="res://Scenes/Menus/audio.gd" id="3_penys"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("tutorial_button", "start_button", "options_button")]
 layout_mode = 3
@@ -66,5 +67,49 @@ focus_neighbor_top = NodePath("../Start")
 text = "OPTIONS"
 alignment = 0
 
+[node name="OptionsMenu" type="Control" parent="Options"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 243.0
+offset_top = -139.0
+offset_right = 541.0
+offset_bottom = 46.0
+color = Color(0.66, 0.4367, 0.198, 1)
+
+[node name="Back" type="Button" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -129.0
+offset_right = 319.0
+offset_bottom = -91.0
+text = "BACK"
+
+[node name="Audio" type="HSlider" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -24.0
+offset_right = 532.0
+offset_bottom = -8.0
+max_value = 1.0
+step = 0.1
+value = 1.0
+script = ExtResource("3_penys")
+
+[node name="Label" type="Label" parent="Options/OptionsMenu"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -60.0
+offset_right = 343.0
+offset_bottom = -30.0
+text = "VOLUME"
+
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Options/OptionsMenu/Back" to="." method="_on_back_pressed"]
+[connection signal="value_changed" from="Options/OptionsMenu/Audio" to="Options/OptionsMenu/Audio" method="_on_value_changed"]

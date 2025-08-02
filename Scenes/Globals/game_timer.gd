@@ -2,6 +2,7 @@ extends Control
 class_name GameTimer
 
 @export var max_time: float = 90.0
+@export var time_up : Control
 var time: float = max_time
 var minutes: int = 0
 var seconds: int = 0
@@ -24,10 +25,18 @@ func _process(delta) -> void:
 		$Second.text = "00."
 		$MS.text = "00"
 		stop()
+		timebomb()
 
 func restart() -> void:
-	time = 90.0
+	time_up.hide()
+	time = max_time
+	start = true
 	set_process(true)
+
+func timebomb() -> void:
+	time_up.show()
+	var player : Bee = get_tree().get_nodes_in_group("player")[0] as Bee
+	player.freeze()
 
 func stop() -> void:
 	start = false
