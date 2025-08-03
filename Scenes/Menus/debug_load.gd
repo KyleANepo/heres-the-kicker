@@ -1,8 +1,5 @@
 extends Control
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	await get_tree().create_timer(.1).timeout
+func _start_game() -> void:
 	GameManager.restart_game()
 	SceneTransition.change_scene_dissolve("res://Scenes/Levels/level_1.tscn")

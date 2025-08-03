@@ -1,5 +1,8 @@
 extends Control
 
+@export var sfx : Array[AudioStream]
+@onready var audio : AudioStreamPlayer2D = $audio
+
 func _ready() -> void:
 	resume()
 
@@ -42,12 +45,14 @@ func _on_resume_pressed() -> void:
 
 
 func _on_options_pressed() -> void:
+	_play_audio(1)
 	$Options/OptionsMenu.show()
 	$Options/OptionsMenu/Back.grab_focus()
 	_disable_menu()
 
 
 func _on_quit_pressed() -> void:
+	_play_audio(1)
 	$Options/OptionsMenu.visible = false
 	resume()
 	GameManager.quit_game()
@@ -55,6 +60,27 @@ func _on_quit_pressed() -> void:
 
 
 func _on_back_pressed() -> void:
+	_play_audio(1)
 	$Options/OptionsMenu.hide()
 	_enable_menu()
 	$Options.grab_focus()
+
+
+func _on_resume_focus_entered() -> void:
+	_play_audio(0)
+
+
+func _on_options_focus_entered() -> void:
+	_play_audio(0)
+
+
+func _on_quit_focus_entered() -> void:
+	_play_audio(0)
+
+func _play_audio(index : int) -> void:
+	audio.stream = sfx[index]
+	audio.play()
+
+
+func _on_back_focus_entered() -> void:
+	_play_audio(0)

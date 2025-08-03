@@ -1,0 +1,100 @@
+[gd_scene load_steps=16 format=3 uid="uid://vc3r6woyo7dn"]
+
+[ext_resource type="Script" uid="uid://dah2upyefqr6n" path="res://Scenes/Components/upkick_upgrade.gd" id="1_w3ukk"]
+[ext_resource type="Shader" uid="uid://drddtcwvx223n" path="res://Shaders/tornado_upgrade.gdshader" id="2_w3ukk"]
+[ext_resource type="PackedScene" uid="uid://d06bdmjmfwxxq" path="res://Scenes/Components/hitspark_player.tscn" id="3_ci88v"]
+[ext_resource type="Texture2D" uid="uid://c4watfp5pi48h" path="res://Sprites/Upgrades/orb2.png" id="3_w3ukk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vrotf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hkp4"]
+shader = ExtResource("2_w3ukk")
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/frequency = 0.8
+shader_parameter/highlight_speed = 4.0
+shader_parameter/highlight_width = 15.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ci88v"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vi1be"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbmfo"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igxfr"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_us51y"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xphb7"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3vgl"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6wyq"]
+atlas = ExtResource("3_w3ukk")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vi1be"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ci88v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vi1be")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_cbmfo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igxfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_us51y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xphb7")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_d3vgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6wyq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="UpkickUpgrade" type="Node2D"]
+z_index = 10
+script = ExtResource("1_w3ukk")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_vrotf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_7hkp4")
+sprite_frames = SubResource("SpriteFrames_vi1be")
+autoplay = "default"
+frame_progress = 0.00901882
+
+[node name="hitspark_player" parent="." instance=ExtResource("3_ci88v")]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

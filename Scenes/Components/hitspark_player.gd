@@ -7,7 +7,7 @@ func play_spark(anim: String):
 	var s = Hitspark.instantiate()
 	s.transform = $".".global_transform
 	s.anim = anim
-	if get_tree():
+	if is_inside_tree():
 		get_tree().current_scene.add_child(s)
 
 func play_spark_follow(anim: String):

@@ -7,13 +7,14 @@ class_name Entity
 @onready var audio : SoundPlayer = $sound_player
 @export var health = 1
 @export var curAttack : Attack
+@export var boost : float = 100
 var ko : bool = false
 
 func take_damage(values : Attack) -> void:
 	if not ko:
 		health -= values.damage
 		if values.attackOwner is Bee:
-			values.attackOwner.attack_successful()
+			values.attackOwner.attack_successful(boost)
 		
 		
 		if health <= 0:

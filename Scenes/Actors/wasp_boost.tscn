@@ -1,0 +1,208 @@
+[gd_scene load_steps=19 format=3 uid="uid://clwgb8swq6c08"]
+
+[ext_resource type="Script" uid="uid://c1dwvnis3yy0r" path="res://Scenes/Actors/wasp.gd" id="1_w2i3y"]
+[ext_resource type="Shader" uid="uid://b72p54rutv0w0" path="res://Shaders/hitflashoutline.gdshader" id="2_yram1"]
+[ext_resource type="Texture2D" uid="uid://o8sogrknjcua" path="res://Sprites/enemies/drone.png" id="3_b3jlr"]
+[ext_resource type="PackedScene" uid="uid://bxe7uc3yl8p7o" path="res://Scenes/Components/hurtbox.tscn" id="4_yrv80"]
+[ext_resource type="PackedScene" uid="uid://d06bdmjmfwxxq" path="res://Scenes/Components/hitspark_player.tscn" id="5_3uqu4"]
+[ext_resource type="PackedScene" uid="uid://dua11srl6i284" path="res://Scenes/Components/sound_player.tscn" id="6_4k4kw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b07c4"]
+size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eca1q"]
+resource_local_to_scene = true
+shader = ExtResource("2_yram1")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0, 1, 1, 0.501961)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/shade_color = Color(0, 1, 1, 0.415686)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag8wo"]
+atlas = ExtResource("3_b3jlr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_byc71"]
+atlas = ExtResource("3_b3jlr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0tcf"]
+atlas = ExtResource("3_b3jlr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ytpj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ag8wo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_byc71")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0tcf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="Animation" id="Animation_jor0a"]
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["default"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b1hdi"]
+_data = {
+&"default": SubResource("Animation_jor0a")
+}
+
+[sub_resource type="Animation" id="Animation_g0jxc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/tint")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_j4qit"]
+resource_name = "hitflash"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/tint")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vjcv6"]
+resource_name = "respawn"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/tint")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g0jxc"]
+_data = {
+&"RESET": SubResource("Animation_g0jxc"),
+&"hitflash": SubResource("Animation_j4qit"),
+&"respawn": SubResource("Animation_vjcv6")
+}
+
+[node name="WaspBoost" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_w2i3y")
+boost = 300.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = -1
+shape = SubResource("RectangleShape2D_b07c4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_eca1q")
+position = Vector2(-9.53674e-07, 9.53674e-07)
+sprite_frames = SubResource("SpriteFrames_2ytpj")
+autoplay = "default"
+frame_progress = 0.531259
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b1hdi")
+}
+
+[node name="Flash" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_g0jxc")
+}
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_yrv80")]
+
+[node name="hitspark_player" parent="." instance=ExtResource("5_3uqu4")]
+
+[node name="sound_player" parent="." instance=ExtResource("6_4k4kw")]

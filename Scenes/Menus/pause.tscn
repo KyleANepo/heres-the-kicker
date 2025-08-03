@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1ea37pevuhnv"]
+[gd_scene load_steps=6 format=3 uid="uid://d1ea37pevuhnv"]
 
 [ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="1_d36sb"]
 [ext_resource type="Script" uid="uid://bhn8pa1jl8jvx" path="res://Scenes/Menus/pause.gd" id="1_jc605"]
 [ext_resource type="Script" uid="uid://dobxpvjd161lk" path="res://Scenes/Menus/audio.gd" id="3_lrvf4"]
+[ext_resource type="AudioStream" uid="uid://dbaab2dnq7i7l" path="res://Audio/sfx/choose.wav" id="3_q2x24"]
+[ext_resource type="AudioStream" uid="uid://i71ah80ejdih" path="res://Audio/sfx/confirm.wav" id="4_w6od5"]
 
 [node name="Pause" type="Control"]
 process_mode = 3
@@ -15,6 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_d36sb")
 script = ExtResource("1_jc605")
+sfx = Array[AudioStream]([ExtResource("3_q2x24"), ExtResource("4_w6od5")])
 
 [node name="bg" type="ColorRect" parent="."]
 layout_mode = 1
@@ -27,30 +30,28 @@ color = Color(0, 0, 0, 0.290196)
 
 [node name="Resume" type="Button" parent="."]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 31.0
-offset_right = 160.0
-offset_bottom = 69.0
+offset_left = 10.0
+offset_top = 298.0
+offset_right = 178.0
+offset_bottom = 352.0
 text = "BACK"
-alignment = 0
 
 [node name="Options" type="Button" parent="."]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 69.0
-offset_right = 160.0
-offset_bottom = 107.0
+offset_left = 154.0
+offset_top = 298.0
+offset_right = 322.0
+offset_bottom = 352.0
 text = "OPTIONS"
-alignment = 0
 
 [node name="OptionsMenu" type="Control" parent="Options"]
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_left = 21.0
-offset_top = 204.0
-offset_right = 61.0
-offset_bottom = 244.0
+offset_left = -80.0
+offset_top = -61.0
+offset_right = -40.0
+offset_bottom = -21.0
 
 [node name="ColorRect" type="ColorRect" parent="Options/OptionsMenu"]
 layout_mode = 0
@@ -89,16 +90,21 @@ text = "VOLUME"
 
 [node name="Quit" type="Button" parent="."]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 107.0
-offset_right = 160.0
-offset_bottom = 145.0
+offset_left = 298.0
+offset_top = 298.0
+offset_right = 466.0
+offset_bottom = 352.0
 text = "QUIT
 "
-alignment = 0
 
+[node name="audio" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="focus_entered" from="Resume" to="." method="_on_resume_focus_entered"]
 [connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="focus_entered" from="Options" to="." method="_on_options_focus_entered"]
 [connection signal="pressed" from="Options" to="." method="_on_options_pressed"]
+[connection signal="focus_entered" from="Options/OptionsMenu/Back" to="." method="_on_back_focus_entered"]
 [connection signal="pressed" from="Options/OptionsMenu/Back" to="." method="_on_back_pressed"]
 [connection signal="value_changed" from="Options/OptionsMenu/Audio" to="Options/OptionsMenu/Audio" method="_on_value_changed"]
+[connection signal="focus_entered" from="Quit" to="." method="_on_quit_focus_entered"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

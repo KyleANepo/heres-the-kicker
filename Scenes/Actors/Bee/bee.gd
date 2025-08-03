@@ -5,6 +5,7 @@ class_name Bee
 @export var jump_force : float = -300
 @export var divekick_speed : float = 250
 @export var tornadokick_speed : float = 300
+@export var upkick_speed : float = 300
 @export var jumpbuffer_time : float = .2
 @export var coyotetime : float = .1
 var jumpbuffer_timer : float
@@ -13,6 +14,7 @@ var look : int = 1
 var can_control : bool = true
 var jump_count : int = 0
 var tornado_count : bool = false
+var upkick_count : bool = false
 
 enum State {
 	IDLE,
@@ -40,7 +42,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if not is_on_floor() and state not in [State.ATTACK, State.ATTACKAIR, State.HITSTOP, State.FREEZE]:
+	if not is_on_floor() and state not in [State.FREEZE] and sprite.current_animation not in ["tornadokick", "divekick"]:
 		velocity.y = min(velocity.y + (get_gravity().y * delta), 400)
 	
 	_look()
@@ -78,6 +80,11 @@ func _set_state() -> void:
 			spark.play_spark("jump")
 			audio.play_sound(false, 1)
 			call_deferred_thread_group("_attack_air", "altattack")
+		elif Input.is_action_just_pressed("attack") and Input.is_action_pressed("up") and GameManager.upkick_unlocked:
+			position.y -= 4
+			spark.play_spark("jump")
+			audio.play_sound(false, 1)
+			call_deferred_thread_group("_attack_air", "upattack")
 		elif not is_on_floor():
 			coyotetimer = coyotetime
 			sprite.play("flip")
@@ -108,6 +115,9 @@ func _set_state() -> void:
 				sprite.play("idle")
 				state = State.IDLE
 				tornado_count = false
+				upkick_count = false
+		elif Input.is_action_just_pressed("attack") and Input.is_action_pressed("up"):
+			_attack_air("upattack")
 		elif Input.is_action_just_pressed("attack"):
 			_attack_air("attack")
 		elif Input.is_action_just_pressed("altattack"):
@@ -121,6 +131,7 @@ func _set_state() -> void:
 		if is_on_floor() and velocity.y >= 0:
 			jump_count = 0
 			tornado_count = false
+			upkick_count = false
 			if jumpbuffer_timer > 0:
 				sprite.play("jump")
 				_jump(0)
@@ -165,11 +176,12 @@ func _jump(boost : float) -> void:
 	velocity.y = jump_force - boost
 	jump_count += 1
 
-func attack_successful() -> void:
+func attack_successful(boost : float) -> void:
 	if not ko:
 		sprite.play("flip")
 		tornado_count = false
-		_jump(100)
+		upkick_count = false
+		_jump(boost)
 	
 
 func _attack_air(action : String) -> void:
@@ -180,6 +192,11 @@ func _attack_air(action : String) -> void:
 		"altattack":
 			if not tornado_count and GameManager.tornado_unlocked:
 				_tornado()
+			else:
+				_sting()
+		"upattack":
+			if not upkick_count and GameManager.upkick_unlocked:
+				_upkick()
 			else:
 				_sting()
 	
@@ -196,6 +213,12 @@ func _tornado() -> void:
 	tornado_count = true
 	velocity.x = look * tornadokick_speed
 	velocity.y = 0
+
+func _upkick() -> void:
+	sprite.play("upkick")
+	audio.play_sound(true, 1)
+	upkick_count = true
+	velocity.y = -upkick_speed
 
 func _restart_level() -> void:
 	SceneTransition.change_scene_wipe(get_tree().current_scene.scene_file_path)
@@ -239,5 +262,8 @@ func unfreeze() -> void:
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "tornadokick":
+		sprite.play("flip")
+		state = State.JUMP
+	if anim_name == "upkick":
 		sprite.play("flip")
 		state = State.JUMP

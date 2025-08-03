@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cidv6reloqtxf"]
+
+[ext_resource type="AudioStream" uid="uid://r3a2eow1woos" path="res://Audio/sfx/BossMain.wav" id="1_0pvww"]
+[ext_resource type="Script" uid="uid://dnld5eijlk0fy" path="res://Scenes/Globals/music_player.gd" id="1_mk6y0"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_0pvww")
+volume_db = -57.681
+bus = &"Music"
+script = ExtResource("1_mk6y0")

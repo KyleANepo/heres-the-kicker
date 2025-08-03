@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 SceneTransition="*res://Scenes/Globals/scene_transition.tscn"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 GameManager="*res://Scenes/Globals/game_manager.tscn"
+MusicPlayer="*res://Scenes/Globals/music_player.gd"
 
 [display]
 
@@ -35,6 +36,12 @@ enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/phantom_
 [global_group]
 
 player=""
+
+[importer_defaults]
+
+wav={
+&"edit/loop_mode": 2
+}
 
 [input]
 

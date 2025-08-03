@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Attack" load_steps=2 format=3 uid="uid://dsk3hmjflr85e"]
+
+[ext_resource type="Script" uid="uid://b8sqcw02rim7o" path="res://Scenes/Components/Attack.gd" id="1_5h3g6"]
+
+[resource]
+script = ExtResource("1_5h3g6")
+damage = 1.0
+stun = 1.0
+hitstop = 0.1
+knockback = 100.0
+knockbackUp = 0.0
+knockbackAir = 100.0
+knockbackAirSide = 0.0
+type = 1
+screenshake = false
+metadata/_custom_type_script = "uid://b8sqcw02rim7o"

@@ -6,6 +6,7 @@ class_name GameTimer
 @export var ui : Control
 @export var circle : Control
 var time: float = max_time
+var bonus_time : float = 0
 var minutes: int = 0
 var seconds: int = 0
 var msec: int = 0
@@ -29,20 +30,24 @@ func _process(delta) -> void:
 		$Second.text = "00."
 		$MS.text = "00"
 		stop()
-		timebomb()
+		call_deferred("timebomb")
 
 func restart() -> void:
-	await get_tree().create_timer(.42).timeout
-	over = false
+	await get_tree().create_timer(.5).timeout
 	circle.scale = Vector2(.01, .01)
 	time_up.hide()
 	time = max_time
+	if GameManager.tornado_unlocked:
+		time += 30
+	if GameManager.upkick_unlocked:
+		time += 30
+	over = false
 	start = true
-	set_process(true)
 
 @onready var sounds : AudioStreamPlayer2D = $sounds
 
 func timebomb() -> void:
+	MusicPlayer.stop_music()
 	var player : Bee = get_tree().get_nodes_in_group("player")[0] as Bee
 	player.call_deferred("freeze")
 	ui.hide()
@@ -55,11 +60,9 @@ func timebomb() -> void:
 
 func resume() -> void:
 	start = true
-	set_process(true)
 
 func stop() -> void:
 	start = false
-	set_process(false)
 
 func get_time_formatted() -> String:
 	return "%02d:%02d.%03d" % [minutes, seconds, msec]

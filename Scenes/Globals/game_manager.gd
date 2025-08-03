@@ -3,8 +3,8 @@ extends Node2D
 @export var UI : Control
 @export var gametimer : GameTimer
 @export var time_up : Control
-var tornado_unlocked : bool = false
-var upkick_unlocked : bool = false
+var tornado_unlocked : bool = true
+var upkick_unlocked : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,6 +15,7 @@ func restart_game() -> void:
 	tornado_unlocked = false
 	upkick_unlocked = false
 	gametimer.restart()
+	await get_tree().create_timer(.8).timeout
 	timer_show()
 	UI.show()
 

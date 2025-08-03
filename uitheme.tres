@@ -1,7 +1,51 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ixk1podbgorc"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://ixk1podbgorc"]
 
+[ext_resource type="Texture2D" uid="uid://ijmut3apwrrd" path="res://Sprites/button.png" id="1_6uri1"]
 [ext_resource type="FontFile" uid="uid://cb7pm14naghgu" path="res://PixelMechaBold.ttf" id="1_peu0b"]
+[ext_resource type="Texture2D" uid="uid://bgd3ice75jiib" path="res://Sprites/buttonfocus.png" id="2_rvblj"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6uri1"]
+texture = ExtResource("1_6uri1")
+texture_margin_left = 36.0
+texture_margin_top = 12.0
+texture_margin_right = 36.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.212305, 0.212305, 0.212305, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3mnkx"]
+texture = ExtResource("2_rvblj")
+texture_margin_left = 36.0
+texture_margin_top = 12.0
+texture_margin_right = 36.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8hbgs"]
+texture = ExtResource("1_6uri1")
+texture_margin_left = 36.0
+texture_margin_top = 12.0
+texture_margin_right = 36.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.666569, 0.666569, 0.666569, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rvblj"]
+texture = ExtResource("1_6uri1")
+texture_margin_left = 36.0
+texture_margin_top = 12.0
+texture_margin_right = 36.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tiinv"]
+texture = ExtResource("1_6uri1")
+texture_margin_left = 36.0
+texture_margin_top = 12.0
+texture_margin_right = 36.0
+texture_margin_bottom = 12.0
 
 [resource]
 default_font = ExtResource("1_peu0b")
 default_font_size = 32
+Button/styles/disabled = SubResource("StyleBoxTexture_6uri1")
+Button/styles/focus = SubResource("StyleBoxTexture_3mnkx")
+Button/styles/hover = SubResource("StyleBoxTexture_8hbgs")
+Button/styles/normal = SubResource("StyleBoxTexture_rvblj")
+Button/styles/pressed = SubResource("StyleBoxTexture_tiinv")
