@@ -1,7 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhqti0sy8f5ai"]
+[gd_scene load_steps=10 format=3 uid="uid://bhqti0sy8f5ai"]
 
 [ext_resource type="Theme" uid="uid://ixk1podbgorc" path="res://uitheme.tres" id="1_8207s"]
+[ext_resource type="Script" uid="uid://dlh6v6mgnmvud" path="res://Scenes/Menus/win_screen.gd" id="2_egkou"]
 [ext_resource type="PackedScene" uid="uid://d1ea37pevuhnv" path="res://Scenes/Menus/pause.tscn" id="2_nru6u"]
+[ext_resource type="PackedScene" uid="uid://7daiy03eiwh" path="res://Scenes/Components/levelbg.tscn" id="3_5o8sj"]
+[ext_resource type="Texture2D" uid="uid://8r4qqdxefys3" path="res://Sprites/Bee/airstring1.png" id="5_4h7gn"]
+[ext_resource type="AudioStream" uid="uid://cxotru67eib" path="res://Audio/sfx/win.wav" id="6_pvw6q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvw6q"]
+atlas = ExtResource("5_4h7gn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1aa1q"]
+atlas = ExtResource("5_4h7gn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_svmma"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvw6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1aa1q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
 
 [node name="WinScreen" type="Control"]
 layout_mode = 3
@@ -11,6 +37,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_8207s")
+script = ExtResource("2_egkou")
+
+[node name="BG" parent="." instance=ExtResource("3_5o8sj")]
+autoscroll = Vector2(0, -64)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -19,17 +49,92 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -133.0
-offset_top = -31.5
-offset_right = 133.0
-offset_bottom = 31.5
+offset_left = -128.0
+offset_top = -72.0
+offset_right = 192.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "YOU WIN! (THIS ISNT FINAL WIN SCREEN)
-PRESS ESCAPE TO QUIT!"
+text = "YOU SAVED THE WORLD WITH"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -40.0
+offset_right = 192.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "asdasd"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -8.0
+offset_right = 192.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SECONDS TO SPARE!"
+horizontal_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(152, 140)
+sprite_frames = SubResource("SpriteFrames_svmma")
+autoplay = "default"
+frame_progress = 0.383676
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = 91.0
+offset_right = 270.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "THANKS FOR PLAYING! -A GAME BY BUGZSTEAKS!"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = 134.0
+offset_right = 270.0
+offset_bottom = 197.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PRESS ESCAPE TO QUIT!"
 horizontal_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Pause" parent="CanvasLayer" instance=ExtResource("2_nru6u")]
 visible = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, -196)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_pvw6q")

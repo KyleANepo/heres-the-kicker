@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbjma42mgj71v"]
+
+[ext_resource type="Script" uid="uid://bodyqx6k4o7nr" path="res://Scenes/Globals/screenshot_taker.gd" id="1_cco2v"]
+
+[node name="ScreenshotTaker" type="Node"]
+script = ExtResource("1_cco2v")

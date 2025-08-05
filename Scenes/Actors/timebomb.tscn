@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmp8o7kbesgfo"]
+
+[ext_resource type="Script" uid="uid://c4cnqdbqdnqnu" path="res://Scenes/Actors/timebomb.gd" id="1_4730f"]
+[ext_resource type="Shader" uid="uid://b72p54rutv0w0" path="res://Shaders/hitflashoutline.gdshader" id="2_4bcf8"]
+[ext_resource type="Texture2D" uid="uid://k71o3ymiusac" path="res://Sprites/enemies/timebomb.png" id="2_o4pbu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4730f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdwvl"]
+shader = ExtResource("2_4bcf8")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0, 1, 1, 1)
+shader_parameter/outline_size = 2.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/shade_color = Color(1, 1, 1, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bcf8"]
+atlas = ExtResource("2_o4pbu")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdwvl"]
+atlas = ExtResource("2_o4pbu")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o4pbu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4bcf8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdwvl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Timebomb" type="CharacterBody2D"]
+script = ExtResource("1_4730f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4730f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_kdwvl")
+sprite_frames = SubResource("SpriteFrames_o4pbu")
+autoplay = "default"
+frame_progress = 0.850005

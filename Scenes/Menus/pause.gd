@@ -56,6 +56,7 @@ func _on_quit_pressed() -> void:
 	$Options/OptionsMenu.visible = false
 	resume()
 	GameManager.quit_game()
+	MusicPlayer.stop_music()
 	SceneTransition.change_scene_dissolve("res://Scenes/Menus/main_menu.tscn")
 
 

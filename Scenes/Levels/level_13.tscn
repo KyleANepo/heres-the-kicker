@@ -23,8 +23,7 @@ tile_set = ExtResource("3_2ykwf")
 
 [node name="level_exit" parent="." instance=ExtResource("4_p7cy0")]
 position = Vector2(288, -288)
-next_level = "uid://bhqti0sy8f5ai"
-final_door = true
+next_level = "uid://3jyan3hlitk4"
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -70,7 +69,6 @@ position = Vector2(304, -512)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(288, 64)
 rotation = 2.35619
-scale = Vector2(1, 1)
 texture = ExtResource("7_51crm")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
@@ -78,21 +76,18 @@ region_rect = Rect2(32, 0, 32, 32)
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(312, 88)
 rotation = 2.35619
-scale = Vector2(1, 1)
 texture = ExtResource("7_51crm")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
 [node name="Sprite2D4" type="Sprite2D" parent="."]
 position = Vector2(112, -528)
-scale = Vector2(1, 1)
 texture = ExtResource("7_51crm")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
 [node name="Sprite2D5" type="Sprite2D" parent="."]
 position = Vector2(112, -528)
-scale = Vector2(1, 1)
 texture = ExtResource("7_51crm")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
@@ -100,7 +95,6 @@ region_rect = Rect2(32, 0, 32, 32)
 [node name="Sprite2D6" type="Sprite2D" parent="."]
 position = Vector2(304, -632)
 rotation = 1.57079
-scale = Vector2(1, 1)
 texture = ExtResource("7_51crm")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
@@ -108,14 +102,12 @@ region_rect = Rect2(32, 0, 32, 32)
 [node name="Sprite2D7" type="Sprite2D" parent="."]
 position = Vector2(496, -432)
 rotation = 3.92699
-scale = Vector2(1, 1)
 texture = ExtResource("7_51crm")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 position = Vector2(144, 320)
-scale = Vector2(1, 1)
 texture = ExtResource("7_51crm")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)

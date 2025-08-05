@@ -34,9 +34,10 @@ func timebombed() -> void:
 	timer_hide()
 	timer_show()
 
-func end_game() -> void:
+func end_game() -> String:
 	gametimer.stop()
 	UI.show()
+	return gametimer.get_time_formatted()
 
 func quit_game() -> void:
 	gametimer.stop()
